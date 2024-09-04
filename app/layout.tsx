@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import Sidebar from "@/components/ui/sidebar";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -26,7 +27,9 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        {children}
+        <Sidebar position="left" />
+        <main className="flex-grow">{children}</main>
+        <Sidebar position="right" />
       </body>
     </html>
   );
