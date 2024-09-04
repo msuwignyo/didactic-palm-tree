@@ -11,6 +11,7 @@ import {
   Package2,
   ShoppingCart,
   Users2,
+  LucideIcon,
 } from "lucide-react";
 import {
   Tooltip,
@@ -20,13 +21,40 @@ import {
 } from "./tooltip";
 import Link from "next/link";
 
-interface SidebarProps {
-  position: "left" | "right";
+interface NavItem {
+  href: string;
+  icon: LucideIcon | (() => React.JSX.Element);
+  label: string;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ position }) => {
+interface SidebarProps {
+  position: "left" | "right";
+  navItems: NavItem[];
+  bottomNavItems: NavItem[];
+}
+
+const Sidebar: React.FC<SidebarProps> = ({
+  position,
+  navItems,
+  bottomNavItems,
+}) => {
   const sideClass = position === "left" ? "left-0" : "right-0";
   const tooltipSide = position === "left" ? "right" : "left";
+
+  const renderNavItem = (item: NavItem) => (
+    <Tooltip key={item.href}>
+      <TooltipTrigger asChild>
+        <Link
+          href={item.href}
+          className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+        >
+          <item.icon className="h-5 w-5" />
+          <span className="sr-only">{item.label}</span>
+        </Link>
+      </TooltipTrigger>
+      <TooltipContent side={tooltipSide}>{item.label}</TooltipContent>
+    </Tooltip>
+  );
 
   return (
     <TooltipProvider>
@@ -41,91 +69,14 @@ const Sidebar: React.FC<SidebarProps> = ({ position }) => {
             <Package2 className="h-4 w-4 transition-all group-hover:scale-110" />
             <span className="sr-only">Acme Inc</span>
           </Link>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-              >
-                <Home className="h-5 w-5" />
-                <span className="sr-only">Dashboard</span>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent side={tooltipSide}>Dashboard</TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-              >
-                <ShoppingCart className="h-5 w-5" />
-                <span className="sr-only">Orders</span>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent side={tooltipSide}>Orders</TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-              >
-                <Package className="h-5 w-5" />
-                <span className="sr-only">Products</span>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent side={tooltipSide}>Products</TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-              >
-                <Users2 className="h-5 w-5" />
-                <span className="sr-only">Customers</span>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent side={tooltipSide}>Customers</TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-              >
-                <LineChart className="h-5 w-5" />
-                <span className="sr-only">Analytics</span>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent side={tooltipSide}>Analytics</TooltipContent>
-          </Tooltip>
+          {navItems.map(renderNavItem)}
         </nav>
         <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-              >
-                <Settings className="h-5 w-5" />
-                <span className="sr-only">Settings</span>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent side={tooltipSide}>Settings</TooltipContent>
-          </Tooltip>
+          {bottomNavItems.map(renderNavItem)}
         </nav>
       </aside>
     </TooltipProvider>
   );
 };
-
-const SidebarIcon = ({ icon }: { icon: React.ReactNode }) => (
-  <div className="sidebar-icon group">
-    {icon}
-    <span className="sidebar-tooltip group-hover:scale-100">Tooltip</span>
-  </div>
-);
 
 export default Sidebar;

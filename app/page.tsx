@@ -52,7 +52,7 @@ export default function Home() {
               <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
                 IELTS Writing Task 2
               </h3>
-              <Button onClick={handleSave}>save</Button>
+              <Button onClick={handleSave}>Save</Button>
             </div>
             <Editor ref={initializeEditor} />
           </div>
