@@ -16,7 +16,26 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"preset": "recommended"
+			"preset": "recommended",
+			"complexity": {
+				"noExcessiveCognitiveComplexity": "warn"
+			},
+			"correctness": {
+				"noUnresolvedImports": "error"
+			},
+			"nursery": {
+				"noFloatingPromises": "error",
+				"noMisusedPromises": "error"
+			},
+			"security": {
+				"noSecrets": "error"
+			},
+			"suspicious": {
+				"noConsole": "warn",
+				"noEmptyBlockStatements": "warn",
+				"noShadow": "warn",
+				"useAwait": "warn"
+			}
 		}
 	},
 	"css": {
