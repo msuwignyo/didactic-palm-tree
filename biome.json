@@ -30,6 +30,10 @@
 			"security": {
 				"noSecrets": "error"
 			},
+			"style": {
+				"useBlockStatements": "error",
+				"useCollapsedIf": "error"
+			},
 			"suspicious": {
 				"noConsole": "warn",
 				"noEmptyBlockStatements": "warn",
