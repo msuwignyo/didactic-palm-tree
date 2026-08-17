@@ -31,7 +31,9 @@
 				"noSecrets": "error"
 			},
 			"style": {
+				"noEnum": "error",
 				"useBlockStatements": "error",
+				"useCollapsedElseIf": "error",
 				"useCollapsedIf": "error"
 			},
 			"suspicious": {
